@@ -3,8 +3,8 @@ const express = require('express');
 const routers = express.Router();
 const bodyParser = require('body-parser');
 const ObjectID = require('mongodb').ObjectID;
-const Sensor = require('../Sensor/sensor')
-const Journal = require('../Journal/journal');
+const Sensor = require('../models/sensor')
+const Journal = require('../models/journal');
 
 
 // get data sensor 
@@ -23,6 +23,42 @@ routers.get('/dashboard', async(req, res) => {
         })
     }
 })
+
+routers.get('/home', async (req, res) => {
+    const sensor = await Sensor.aggregate(
+        [
+            {$project: 
+                {
+                    date: {$dateToString: {format: "%Y-%m-%d", date: "$createdAt"}},
+                    keyValue: 1,
+                    Temperature: "$Temperature",
+                    Humidinity: "$Humidinity",
+                    SoilMoinsture: "$SoilMoinsture",
+                    LightSensor: "$LightSensor"
+                }
+            },
+            {$group: {
+                _id: '$date',
+                avgTemp : {$avg: '$Temperature'},
+                avgHum: {$avg: '$Humidinity'},
+                avgSoil: {$avg: '$SoilMoinsture'},
+                avgLight: {$avg: '$LightSensor'}
+                }
+            }
+        ],
+        (err, result) => {
+            if(err){
+                res.send(err);
+            }else{
+                res.send({
+                    status: 'success',
+                    message: 'success ',
+                    data: result
+                });
+            }
+        }
+    );
+});
 //////////////////////////////////////////////////////
 ////////////////////// JOURNAL API ///////////////////
 //////////////////////////////////////////////////////
