@@ -32,10 +32,10 @@ db.sensordatas.aggregate([
     }}
 ])
 
-db.sensordatas.aggregate([
+db.sensors.aggregate([
     {$project: 
         {
-            date: {$dateToString: {format: "%Y-%m-%d", date: "$createdAt"}},
+            date: {$dateToString: {format: "%m-%d", date: "$createdAt"}},
             keyValue: 1,
             Temperature: "$Temperature",
             Humidinity: "$Humidinity",

@@ -4,7 +4,7 @@ const routers = express.Router();
 const bodyParser = require('body-parser');
 const ObjectID = require('mongodb').ObjectID;
 const Sensor = require('../Sensor/sensor')
-//const { ReplSet } = require('mongodb');
+const Journal = require('../Journal/journal');
 
 
 // get data sensor 
@@ -13,7 +13,7 @@ routers.get('/dashboard', async(req, res) => {
     if(sensor.length > 0){
         res.send({
             status: 'succes',
-            message: 'list sensor data  finded',
+            message: 'list sensor data  was found',
             data: sensor
         });
     }else{
@@ -27,124 +27,130 @@ routers.get('/dashboard', async(req, res) => {
 ////////////////////// JOURNAL API ///////////////////
 //////////////////////////////////////////////////////
 
-// all Journal
-routers.get('/journals', async(req, res) => {
-    if(client.isConnected()){
-        const db = client.db('Greenhouse');
-        const Journal = await db.collection('journalData').find().toArray();
+routers.get('/journals', async (req,res) => {
+    const journals = await Journal.find();
+    if(journals.length > 0){
+        res.send({
+            status: 'succes',
+            message: 'list journal was found',
+            data: journals
+        });
+    }else{
+        res.send({
+            status: 'succes',
+            message: 'list journal not found',
+
+        });
+    }
+});
+
+// single Journal
+routers.get('/journal/:id', async (req,res) => {
+    const journal = await Journal.findById(req.params.id);
+    if(journal){
         res.send({
             status: 'success',
-            message: 'list Journal',
-            data: Journal
-        });
-    }else{
-        res.send('Connection database failed');
-    }
-});
-
-
-// Single Journal
-routers.get('/journal/:id', async(req,res) => {
-    if(client.isConnected()){
-        const db = client.db('Greenhouse');
-        const Journal = await db.collection('journalData').findOne({
-            _id: ObjectID(req.params.id)
-        });
-        res.send({
-            status: 'succes',
-            message: 'single journal data',
-            data: Journal
-        });
-    }else{
-        res.send({
-            status: 'error',
-            message: 'Failed database connction'
-        });
-    }
-});
-
-routers.post('/journal', async(req, res) => {
-    if(client.isConnected()){
-        const{title, description} = req.body;
-        const db = client.db('Greenhouse');
-        const Journal = await db.collection('journalData').insertOne({
-            title: title,
-            description: description,
-            date: new Date()
-        });
-        res.send({
-            status: 'succes',
-            message: 'add journal succes'
+            message: 'single journal was found',
+            data: journal,
         });
     }else{
         res.send({
             status: 'warning',
-            message: 'fail to add journal',
+            message: 'single journal not found',
         });
     }
 });
 
-// Update Journal Data
-routers.put('/journal/:id', async (req,res) => {
-    if(client.isConnected()){
-        const{title, description} = req.body
-        const db = client.db('Greenhouse');
-        const result = await db.collection('journalData').updateOne(
-            {_id: ObjectID(req.params.id)},
-            {
-                $set: {
-                    title: title,
-                    description: description,
-                    //date: new Date()
-                }
-            });
-        if(result.matchedCount == 1){
-            res.send({
-                status: 'succces',
-                message: 'Journal was uppdated'
-            });
-        }else{
-            res.send({
-                status: 'Warning',
-                message: 'Update Journal Failed'
-            })
-        }
-    }else{
-        res.send({
-            status: 'error',
-            message: 'Connection failed'
+// add journal
+routers.post('/journal', async (req, res) => {
+    const {title, description} = req.body
+    try{
+        const journal = await Journal.create({
+            title: title,
+            description: description
         });
-    }
-});
-
-routers.delete('/journal/:id', async (req, res) => {
-    if(client.isConnected()){
-        const db = client.db('Greenhouse');
-        const result = await db.collection('journalData').deleteOne(
-            {_id: ObjectID(req.params.id)}
-        );
-        if(result.deletedCount == 1){
+        if(journal){
             res.send({
-                status: 'succes',
-                message: 'delete journal success'
+                status: 'success',
+                message: 'add journal success',
+                data: journal
             });
-            
         }else{
             res.send({
                 status: 'warning',
-                message: 'delete journal faill'
+                message: 'add journal failed',
             });
         }
-    }else{
+    }catch(error){
         res.send({
             status: 'error',
-            message: 'connection database failed'
+            message: error.message,
         });
     }
 });
 
+// Update Journal
+routers.put('/journal/:id', async(req, res) =>{
+    const {title, description} = req.body
+    try{
+        const result = await Journal.updateOne(
+            {_id: req.params.id},
+            {
+                titile: '',
+                description: description,
+            }, 
+            {runValidators: true}
+            );
+            if (result.ok ==1){
+                res.send({
+                    status: 'success',
+                    message: 'update product success',
+                    data: result
+                });
+            }else{
+                res.send({
+                    status: 'warning',
+                    message: 'update journal failed',
+                });
+            }
+    }catch(error){
+        res.send({
+            status: 'error',
+            message: error.message,
+        });
+    };
+});
+
+// Delete Journal
+
+routers.delete('/journal/:id', async (req, res) => {
+    try{
+        const result = await Journal.deleteOne(
+            {_id: req.params.id}
+            );
+            if(result.deleteCount ==1){
+                res.send({
+                    status: 'success',
+                    message: 'delete product success',
+                    data: result
+                });
+            }else{
+                res.send({
+                    status: 'warning',
+                    message: 'delete journal failed',
+                    data: result
+                });
+            }
+    }catch(error){
+        res.send({
+            status: 'error',
+            message: error.message,
+        });
+    };
+});
 
 
+module.exports = routers;
 
 
 // WEB SOCKET /// 

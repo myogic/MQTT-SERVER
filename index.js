@@ -30,11 +30,12 @@ mqttClient.on('offline', () => {
 
 mqttClient.on('message',async (topic, message) => {
       message = JSON.parse(message.toString());
-      //sio.emit('data', message);
+      io.emit('data', message);
       //console.log("Pesan : ", message);
 
       const {deviceName, Temperature, Humidinity, SoilMoinsture, LightSensor } = message;
-       try{
+      if (topic === '/deviceInfo'){
+      try{
            const sensor = await Sensor.create({
                deviceName: deviceName,
                Temperature: Temperature,
@@ -49,7 +50,7 @@ mqttClient.on('message',async (topic, message) => {
        }catch(error){
            console.log("Not Inserted");
        }
-      
+    }
 
 });
 
