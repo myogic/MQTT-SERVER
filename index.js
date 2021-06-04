@@ -4,10 +4,10 @@ const express = require('express'),
  bodyParser = require('body-parser'),
  mqtt = require('mqtt'),
  mqttClient = mqtt.connect('mqtt://127.0.0.1:1883'),
- Topic = '/deviceInfo',
+ Topic = '#',
  Server = app.listen(3000),
- Sensor = require('./Sensor/sensor');
- 
+ Sensor = require('./models/sensor');
+
 require('./connection/connection');
  // Socket Network
 const socket = require('socket.io');
@@ -29,12 +29,12 @@ mqttClient.on('offline', () => {
 });
 
 mqttClient.on('message',async (topic, message) => {
-      message = JSON.parse(message.toString());
-      io.emit('data', message);
-      //console.log("Pesan : ", message);
-
-      const {deviceName, Temperature, Humidinity, SoilMoinsture, LightSensor } = message;
-      if (topic === '/deviceInfo'){
+    message = message.toString()
+    console.log("Pesan : ", message);
+    if (message.length > 80){
+        message = JSON.parse(message.toString())
+        io.emit('data', message);
+        const {deviceName, Temperature, Humidinity, SoilMoinsture, LightSensor } = message;
       try{
            const sensor = await Sensor.create({
                deviceName: deviceName,
