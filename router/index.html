@@ -1,58 +1,174 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 
-    <title>SMART GREENHOUSE</title>
-  </head>
-  <body>
-    <div class="pos-f-t">
-      <div class="collapse" id="navbarToggleExternalContent">
-        <div class="bg-dark p-4">
-          <h4 class="text-white">Collapsed content</h4>
-          <span class="text-muted">Toggleable via the navbar brand.</span>
+body{
+    background: #fefefe;
+    font-family: sans-serif;
+}
+.header{
+    background-color:rgb(3, 219, 252);
+    height: 90px;
+    color: #fff;
+    
+}
+.header-list {
+    padding: 33px 20px
+}
+
+.container{
+    width: 90%;
+    margin: 50px auto;
+}
+
+.heading{
+    font-size: 25px;
+    margin-bottom: 50px;
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-flow: wrap;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+
+}
+
+.card {
+    width: 20%;
+    background: #fff;
+    border: 1px solid #ccc;
+    margin-bottom: 50px;
+    transition: 0.3s;
+}
+
+.card-header{
+    text-align: center;
+    padding: 10px 10px;
+    background:linear-gradient(to right, rgb(3, 219, 252), rgb(3, 252, 219));
+    color: #fff;
+}
+
+.card-body{
+    padding: 50px 30px;
+    text-align: center;
+    font-size: 35px;
+
+}
+
+.card-body .btn {
+  display: block;
+  color: #fff;
+  text-align: center;
+  background: linear-gradient(to right, #ff416c, #ff4b2b);
+  margin-top: 30px;
+  text-decoration: none;
+  padding: 10px 5px;
+}
+
+@media screen and (max-width: 1000px) {
+    .card {
+      width: 40%;
+    }
+  }
+  
+  @media screen and (max-width: 620px) {
+    .container {
+      width: 100%;
+    }
+  
+    .heading {
+      padding: 20px;
+      font-size: 20px;
+    }
+  
+    .card {
+      width: 80%;
+    }
+  }
+  
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div class="header">
+        <div class="header-list">
+            <h1>SMART</h1>
         </div>
-      </div>
-      <nav class="navbar navbar-dark bg-dark">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </nav>
     </div>
-    <div class="row">
-      <h1>     </h1>
-      <h1>  </h1>
+    <div class="container">
+     
+        <div class="row">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Temperature</h1>
+                </div>
+                <div class="card-body">
+                    <h2 id="Temperature">0 <span>°C</span> </h2>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h1>Humidinity</h1>
+                </div>
+                <div class="card-body">
+                    <h2 id="Humidinity">0 <span> % </span></h2>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h1>Soil Moinsture</h1>
+                </div>
+                <div class="card-body">
+                    <h2 id="soilMoinsture">0 <span>%</span></h2>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h1>Light Sensor</h1>
+                </div>
+                <div class="card-body">
+                    <h2 id="lightSensor">0  <span>Lux</span></h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="1020" height="480" src="https://charts.mongodb.com/charts-greenhouse-sdqeb/embed/charts?id=43b45d4d-9e45-4095-b806-869984b49706&theme=light"></iframe>
+
+        </div>
+
     </div>
-    <div class="row">
-      <div class="col">
-        <iframe style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="300" height="250" src="https://charts.mongodb.com/charts-greenhouse-sdqeb/embed/charts?id=7508b976-f309-4d31-b1e7-d81279bfa843&autoRefresh=10&theme=dark"></iframe>
-      </div>
-      <div class="col">
-        <iframe style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="300" height="250" src="https://charts.mongodb.com/charts-greenhouse-sdqeb/embed/charts?id=f2145efd-bd28-4515-ae41-30733e3a2732&autoRefresh=10&theme=dark"></iframe>
-      </div>
-      <div class="col">
-        <iframe style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="300" height="250" src="https://charts.mongodb.com/charts-greenhouse-sdqeb/embed/charts?id=eb5d04c1-1fd6-459e-a5bb-be659454bbb0&autoRefresh=10&theme=dark"></iframe>
-      </div>
-      <div class="col">
-        <iframe style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="300" height="250" src="https://charts.mongodb.com/charts-greenhouse-sdqeb/embed/charts?id=044f2e4b-b105-4654-a4ff-295c249f868b&autoRefresh=10&theme=dark"></iframe>
-      </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="480" src="https://charts.mongodb.com/charts-greenhouse-sdqeb/embed/charts?id=43b45d4d-9e45-4095-b806-869984b49706&theme=light"></iframe>
-      </div>
+    
+    <!--- Javascript Code-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        socket.on('data',(data) => {
+            console.log(data);  
+            document.getElementById("Temperature").innerHTML = data.Temperature;
+            document.getElementById("Humidinity").innerHTML = data.Humidinity;
+            document.getElementById("soilMoinsture").innerHTML = data.SoilMoinsture;
+            document.getElementById("lightSensor").innerHTML = data.LightSensor;
+        });
 
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </body>
+
+    </script>
+</body>
 </html>
