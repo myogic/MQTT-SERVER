@@ -69,18 +69,13 @@ body{
     padding: 50px 30px;
     text-align: center;
     font-size: 35px;
+    display: flex;
 
 }
-
-.card-body .btn {
-  display: block;
-  color: #fff;
-  text-align: center;
-  background: linear-gradient(to right, #ff416c, #ff4b2b);
-  margin-top: 30px;
-  text-decoration: none;
-  padding: 10px 5px;
+.card-body, h2{
+    flex: 1;
 }
+
 
 @media screen and (max-width: 1000px) {
     .card {
@@ -120,7 +115,9 @@ body{
                     <h1>Temperature</h1>
                 </div>
                 <div class="card-body">
-                    <h2 id="Temperature">0 <span>°C</span> </h2>
+                    <h2 id="Temperature">0 </h2>
+                    <h2> C</h2>
+                    <h2><i class="fas fa-temperature-low"></i></h2>
                 </div>
             </div>
             <div class="card">
@@ -128,7 +125,9 @@ body{
                     <h1>Humidinity</h1>
                 </div>
                 <div class="card-body">
-                    <h2 id="Humidinity">0 <span> % </span></h2>
+                    <h2 id="Humidinity">0</h2>
+                    <h2> %</h2>
+                    <h2><i class="fas fa-tint"></i> </h2>
                 </div>
             </div>
             <div class="card">
